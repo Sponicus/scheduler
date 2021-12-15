@@ -7,9 +7,11 @@ import { DayList } from "components/DayList";
 import { InterviewerListItem } from "components/InterviewerListItem";
 import { InterviewerList } from "components/InterviewerList";
 import "index.scss";
-import Appointment from "components/Appointment/index.js";
 
+import Appointment from "components/Appointment/index.js";
+import Header from "components/Appointment/Header";
 import Button from "components/Button";
+import Empty from "components/Empty";
 
 storiesOf("Button", module)
   .addParameters({
@@ -148,3 +150,17 @@ storiesOf("InterviewerListItem", module)
   })
   .add("Appointment", () => <Appointment />)
   .add("Appointment with Time", () => <Appointment time="12pm" />);
+  
+  storiesOf("Appointment", module)
+  .addParameters({
+    backgrounds: [{ name: "white", value: "#fff", default: true }]
+  })
+  .add("Appointment", () => <Appointment />)
+  .add("Appointment with Time", () => <Appointment time="12pm" />)
+  .add("Header", () => <Header time="12pm"/>);
+  
+  storiesOf("Empty", module)
+  .addParameters({
+    backgrounds: [{ name: "dark", value: "#222f3e", default: true}] 
+  })
+  .add("Empty", () => <Empty setDay={action("setDay")}/>)
