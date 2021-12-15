@@ -34,7 +34,13 @@ export default function Application(props) {
         alt="Interview Scheduler"
       />
       <hr className="sidebar__separator sidebar--centered" />
-      <nav className="sidebar__menu"></nav>
+      <nav className="sidebar__menu">
+        <DayList
+          days={days}
+          value={day}
+          onChange={setDay}
+        />
+      </nav>
       <img
         className="sidebar__lhl sidebar--centered"
         src="images/lhl.png"
@@ -43,11 +49,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
-        <DayList
-          days={days}
-          value={day}
-          onChange={setDay}
-        />
+        
       </section>
     </main>
   );
