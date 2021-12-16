@@ -164,13 +164,13 @@ storiesOf("InterviewerListItem", module)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
   .add("Header", () => <Header time="12pm"/>);
   
-  storiesOf("Empty", module)
+  storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true}] 
   })
   .add("Empty", () => <Empty onAdd={action("setDay")}/>) //made change from setDay to onAdd
   
-  storiesOf("Show", module)
+  storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true}]
   })
@@ -182,7 +182,7 @@ storiesOf("InterviewerListItem", module)
     onDelete={action("onDelete")}
   />));
   
-  storiesOf("Confirm", module)
+  storiesOf("Appointment", module)
   .add("Confirm", () => (
   <Confirm 
     message="Delete the Appointment?"
@@ -190,21 +190,21 @@ storiesOf("InterviewerListItem", module)
     onCancel={action("onCancel")}
   />));
   
-  storiesOf("Status", module)
+  storiesOf("Appointment", module)
   .add("Status", () => (
   <Status 
     message="Deleting"
   />));
     
-  storiesOf("Error", module)
+  storiesOf("Appointment", module)
   .add("Error", () => (
   <Error
     message="Could no delete appointment"
     onClose={action("onClose")}   
   />));
   
-  storiesOf("Edit", module)
-  .add("Edit", () =>(
+  storiesOf("Appointment", module)
+  .add("Form", () =>(
   <Form
     student="Andrew"
     interviewer={2}
@@ -213,8 +213,8 @@ storiesOf("InterviewerListItem", module)
     onCancel={action("onCancel")}
   />));
   
-  storiesOf("Create", module)
-  .add("Create", () => (
+  storiesOf("Appointment", module)
+  .add("Form", () => (
     <Form
       interviewers={interviewers}
       onSave={action("onSave")}
