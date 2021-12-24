@@ -11,7 +11,7 @@ import "index.scss";
 import Appointment from "components/Appointment/index.js";
 import Header from "components/Appointment/Header";
 import Button from "components/Button";
-import Empty from "components/Empty";
+import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
@@ -204,7 +204,7 @@ storiesOf("InterviewerListItem", module)
   />));
   
   storiesOf("Appointment", module)
-  .add("Form", () =>(
+  .add("Edit", () =>(
   <Form
     student="Andrew"
     interviewer={2}
@@ -214,7 +214,7 @@ storiesOf("InterviewerListItem", module)
   />));
   
   storiesOf("Appointment", module)
-  .add("Form", () => (
+  .add("Create", () => (
     <Form
       interviewers={interviewers}
       onSave={action("onSave")}
