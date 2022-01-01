@@ -30,7 +30,7 @@ export function getInterview(state, interview) {
   }
   let interviewObj = {}
   for (let interviewID in state.interviewers) {
-    if (interview.interviewer == interviewID) {
+    if (interview.interviewer.toString() === interviewID) {
       interviewObj.interviewer = state.interviewers[interviewID];
       interviewObj.student = interview.student;
     }
