@@ -37,3 +37,20 @@ export function getInterview(state, interview) {
   }
   return interviewObj
 }
+
+export function getInterviewersForDay(state, day) {
+  let filteredInterviewersArray = [];
+  let filteredInterviewers = [];
+  
+  for (let stateDay of state.days) {
+    if (day === stateDay.name) {
+      filteredInterviewersArray = stateDay.interviewers; 
+    }
+  }
+  
+  for (let ID of filteredInterviewersArray) {
+    filteredInterviewers.push(state.interviewers[ID]);
+  }
+
+  return filteredInterviewers;
+};
