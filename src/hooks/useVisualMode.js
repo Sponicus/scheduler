@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState} from "react";
 
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
@@ -8,7 +8,7 @@ export default function useVisualMode(initial) {
     if (replace) {
       //do not push current mode into history
     } else {
-      history.push(mode)
+      setHistory(prev => ([...prev, mode]))
     };
     // console.log(`History: ${JSON.stringify(history)}`);
     //set mode to first transition
@@ -19,7 +19,7 @@ export default function useVisualMode(initial) {
   const back = () => {  
     //set mode to last item in the history array and remove it from the array
     if (history.length > 1){
-      setMode(history.pop());
+      setMode(history.pop()); //may cause a bug in the future
     } else {
       setMode(history[0]);
     }
