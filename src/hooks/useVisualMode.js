@@ -10,7 +10,6 @@ export default function useVisualMode(initial) {
     } else {
       setHistory(prev => ([...prev, mode]))
     };
-    // console.log(`History: ${JSON.stringify(history)}`);
     //set mode to first transition
     setMode(event);
     
@@ -23,7 +22,6 @@ export default function useVisualMode(initial) {
     } else {
       setMode(history[0]);
     }
-    // console.log(`History: ${JSON.stringify(history)}`);
   }
   
   return {mode, transition, back};
