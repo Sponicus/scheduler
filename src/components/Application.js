@@ -9,7 +9,6 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    // you may put the line below, but will have to remove/comment hardcoded appointments variable
     appointments: {},
     interviewers: {}
   });
@@ -27,9 +26,40 @@ export default function Application(props) {
       }));
     });
   }, []); 
-  
+    // functions to add an interview 
+    const bookInterview = (id, interview) => {
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      return axios.put(`/api/appointments/${id}`, appointment).then(() => {
+        setState({...state, appointments:appointments});
+      });
+    }
+    
+    //function to remove an interview
+    const cancelInterview = (id) => {
+      const appointment = {
+        ...state.appointments[id],
+        interview: null        
+      };
+      const appointments = {
+        ...state.appointments, 
+        [id]: appointment
+      };
+      return axios.delete(`/api/appointments/${id}`).then(() => {
+        setState({...state, appointments:appointments});
+      }).catch( err => {console.log(err)})
+    };
+    //////////////
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day)
+    
+  console.log(dailyAppointments, state);
     
   const listAppointments = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
@@ -38,22 +68,12 @@ export default function Application(props) {
       id={appointment.id}
       time={appointment.time}
       interview={interview}
-      interviewers={dailyInterviewers}/>
-  )});
+      interviewers={dailyInterviewers}
+      bookInterview={bookInterview}
+      cancelInterview={cancelInterview}/>
+      )});
 
   const setDay = day => setState({ ...state, day });
-  
-  const bookInterview = (id, interview) => {
-    console.log(id, interview);
-  }
-  const save = (name, interviewer) => {
-    const interview = {
-      student: name,
-      interviewer
-    };
-  }
-  
-  
   
   return (
     <main className="layout">
@@ -80,15 +100,7 @@ export default function Application(props) {
         <ul>
           {listAppointments}
         </ul>
-        {/* {dailyAppointments.map((appointment) => {
-          const interview = getInterview(state, appointment.interview);
-        return (<Appointment 
-          key={appointment.id} 
-          id={appointment.id}
-          time={appointment.time}
-          interview={interview}/>
-        )})}
-        <Appointment key="last" time="5pm" /> */}
+        <Appointment key="last" time="5pm"/>
       </section>
     </main>
   );
