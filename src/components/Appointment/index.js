@@ -19,14 +19,12 @@ export default function Appointment(props) {
   const SAVING = "SAVING";
   const DELETING = "DELETING"
   const EDIT = "EDIT";
-  const ERROR_SAVING = "ERROR_SAVING"
+  const ERROR_SAVING = "ERROR_SAVING";
+  const ERROR_DELETING = "ERROR_DELETING";
   
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY 
   );
-
-   
-  console.log(time, interview, mode);
   
   const save = (name, interviewer) => {
     const interview = {
@@ -36,17 +34,17 @@ export default function Appointment(props) {
     transition(SAVING);
     const result = bookInterview(props.id, interview);
     result.then(() => {transition(SHOW)});
-    result.catch(error => {transition(ERROR_SAVING)})
+    result.catch(error => {transition(ERROR_SAVING, true)})
   }
   
   const cancel = () => {
     transition(DELETING);
-    cancelInterview(props.id)
-    .then(() => {transition(EMPTY)})
+    const result = cancelInterview(props.id);
+    result.then(() => {transition(EMPTY)})
+    result.catch(error => {transition(ERROR_DELETING, true)})
   };
   
-  console.log(`Did we get here yet?`)
-  console.log(time, interview, mode);
+
   return (
     <article className="appointment">
       <Header time={time}/>
@@ -86,6 +84,10 @@ export default function Appointment(props) {
       {mode === ERROR_SAVING && <Error
       onClose={() => transition(EMPTY)}
       message="Failed to book interview"
+      />}
+      {mode === ERROR_DELETING && <Error
+      onClose={() => transition(SHOW)}
+      message="Failed to cancel interview"
       />}
     </article>  
   )

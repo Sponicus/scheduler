@@ -53,11 +53,12 @@ export default function Application(props) {
       };
       return axios.delete(`/api/appointments/${id}`).then(() => {
         setState({...state, appointments:appointments});
-      }).catch( err => {console.log(err)})
+      })
     };
     //////////////
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day)
+  
   
   const listAppointments = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
