@@ -70,8 +70,12 @@ export default function Application(props) {
       interviewers={dailyInterviewers}
       bookInterview={bookInterview}
       cancelInterview={cancelInterview}/>
-      )});
-
+      )
+    }
+  );
+  
+  listAppointments.push(<Appointment key="last" time="5pm"/>)
+    
   const setDay = day => setState({ ...state, day });
   
   return (
@@ -99,7 +103,7 @@ export default function Application(props) {
         <ul>
           {listAppointments}
         </ul>
-        <Appointment key="last" time="5pm"/>
+        {/* <Appointment key="last" time="5pm"/> */}
       </section>
     </main>
   );
