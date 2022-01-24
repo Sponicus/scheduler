@@ -5,7 +5,8 @@ import Show from "./Show";
 import Empty from "./Empty";
 import Form from "./Form";
 import Confirm from "./Confirm";
-import Status from "./Status"
+import Status from "./Status";
+import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 
 
@@ -18,12 +19,14 @@ export default function Appointment(props) {
   const SAVING = "SAVING";
   const DELETING = "DELETING"
   const EDIT = "EDIT";
+  const ERROR_SAVING = "ERROR_SAVING"
   
-   
-
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY 
   );
+
+   
+  console.log(time, interview, mode);
   
   const save = (name, interviewer) => {
     const interview = {
@@ -33,6 +36,7 @@ export default function Appointment(props) {
     transition(SAVING);
     const result = bookInterview(props.id, interview);
     result.then(() => {transition(SHOW)});
+    result.catch(error => {transition(ERROR_SAVING)})
   }
   
   const cancel = () => {
@@ -41,7 +45,8 @@ export default function Appointment(props) {
     .then(() => {transition(EMPTY)})
   };
   
-  
+  console.log(`Did we get here yet?`)
+  console.log(time, interview, mode);
   return (
     <article className="appointment">
       <Header time={time}/>
@@ -77,6 +82,10 @@ export default function Appointment(props) {
         interviewers={props.interviewers} 
         onCancel={() => back()}
         onSave={save}
+      />}
+      {mode === ERROR_SAVING && <Error
+      onClose={() => transition(EMPTY)}
+      message="Failed to book interview"
       />}
     </article>  
   )
