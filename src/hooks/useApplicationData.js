@@ -29,6 +29,24 @@ useEffect(() => {
   });
 }, []); 
 
+const getDayID = (id) => {
+  if (id >= 1 && id <= 5) {
+    return 0;
+  }
+  if (id >= 6 && id <= 10) {
+    return 1;
+  }
+  if (id >= 11 && id <= 15) {
+    return 2;
+  }
+  if (id >= 16 && id <= 20) {
+    return 3;
+  }
+  if (id >= 21 && id <= 25) {
+    return 4;
+  }
+}
+
 //LOGIC for setDay
 const setDay = day => setState({ ...state, day });
 
@@ -42,8 +60,17 @@ const bookInterview = (id, interview) => {
       ...state.appointments,
       [id]: appointment
     };
+        
+    const dayID = getDayID(id);
+    
+    const days = [
+      ...state.days,
+    ];
+    
+    days[dayID].spots--
+    
     return axios.put(`/api/appointments/${id}`, appointment).then(() => {
-      setState({...state, appointments:appointments});
+      setState({...state, appointments:appointments, days:days}) // remove 1 spot when saved
     });
   }
   
@@ -57,8 +84,17 @@ const bookInterview = (id, interview) => {
       ...state.appointments, 
       [id]: appointment
     };
+    
+    const dayID = getDayID(id);
+    
+    const days = [
+      ...state.days,
+    ];
+    
+    days[dayID].spots++
+     
     return axios.delete(`/api/appointments/${id}`).then(() => {
-      setState({...state, appointments:appointments});
+      setState({...state, appointments:appointments, days:days}); // add 1 spot when saved
     })
   
   };
