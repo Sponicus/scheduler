@@ -52,25 +52,30 @@ const setDay = day => setState({ ...state, day });
 
 //LOGIC for bookInterview
 const bookInterview = (id, interview) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-        
-    const dayID = getDayID(id);
+  
+  const appointment = {
+    ...state.appointments[id],
+    interview: { ...interview }
+  };
+  
+  const appointments = {
+    ...state.appointments,
+    [id]: appointment
+  };
+            
+  const dayID = getDayID(id);
     
-    const days = [
-      ...state.days,
-    ];
+  const days = [
+    ...state.days,
+  ];
+  
+  if (state.appointments[id].interview === null) {days[dayID].spots--}
     
-    days[dayID].spots--
     
-    return axios.put(`/api/appointments/${id}`, appointment).then(() => {
-      setState({...state, appointments:appointments, days:days}) // remove 1 spot when saved
+  console.log(Object.keys(state.days))
+  
+  return axios.put(`/api/appointments/${id}`, appointment).then(() => {
+    setState({...state, appointments:appointments, days:days}) // remove 1 spot when saved
     });
   }
   
